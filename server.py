@@ -75,7 +75,7 @@ def parse_tax(doc: str) -> TaxParsed:
     tot = re.search(r'"?(?:totalVatDue|total|grandTotal|taxAmount|amountDue)"?\s*[:=]\s*"?([\d,.]+)', doc, re.I)
     cur = re.search(r'\b(GBP|EUR|USD)\b', doc)
     return TaxParsed(doc_type=d["doc_type"], tax_kind=d["kind"], period=period,
-                     total=tot.group(1) if tot else None, currency=cur.group(1) if cur else None,
+                     total=tot.group(1).rstrip(",.") if tot else None, currency=cur.group(1) if cur else None,
                      jurisdiction=d["juris"], fields_found=len(re.findall(r'[:=]', doc)))
 
 
